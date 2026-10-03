@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "author": "Anonymous maker",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-breadboard-half", "id": "bb1", "top": 112.2, "left": 70, "attrs": {} },
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 115.2, "left": -62.36, "attrs": {} },
+    { "type": "wokwi-lcd1602", "id": "lcd1", "top": -44.57, "left": 121.6, "attrs": {} },
+    { "type": "board-mfrc522", "id": "rfid1", "top": 102.95, "left": 435.44, "attrs": {} },
+    {
+      "type": "wokwi-buzzer",
+      "id": "bz1",
+      "top": 175.2,
+      "left": 126.6,
+      "attrs": { "volume": "0.1" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "rfid1:SDA", "bb1:30b.f", "orange", [ "h-28.8", "v67.2", "h-38.4" ] ],
+    [ "rfid1:SCK", "bb1:29b.f", "gold", [ "h-38.4", "v57.6", "h-38.4" ] ],
+    [ "rfid1:MOSI", "bb1:28b.f", "green", [ "h-38.4", "v48", "h-48" ] ],
+    [ "rfid1:MISO", "bb1:27b.f", "blue", [ "h-28.8", "v38.4", "h-67.2" ] ],
+    [ "rfid1:RST", "bb1:25b.f", "cyan", [ "h-38.4" ] ],
+    [ "esp:3V3", "bb1:bp.1", "red", [ "h-19.05", "v201.6", "h134.4", "v-48" ] ],
+    [ "esp:GND.1", "bb1:bn.1", "black", [ "h-9.45", "v67.2", "h134.4", "v-28.8" ] ],
+    [ "bb1:30b.j", "esp:21", "orange", [ "v19.2", "h-316.8", "v-96" ] ],
+    [ "bb1:29b.j", "esp:18", "gold", [ "v19.2", "h-297.6", "v-67.2" ] ],
+    [ "bb1:28b.j", "esp:23", "green", [ "v19.2", "h-307.2", "v-134.4", "h9.6" ] ],
+    [ "bb1:27b.j", "esp:19", "blue", [ "v19.2", "h-288", "v-76.8", "h9.6" ] ],
+    [ "bb1:25b.j", "esp:22", "cyan", [ "v19.2", "h-268.8", "v-124.8" ] ],
+    [ "bb1:7b.j", "bb1:bn.5", "black", [ "v0" ] ],
+    [ "esp:15", "bb1:8b.j", "red", [ "v0", "h124.8" ] ],
+    [ "rfid1:3.3V", "bb1:bp.25", "red", [ "h-19.2", "v9.6" ] ],
+    [ "rfid1:GND", "bb1:bn.25", "black", [ "h-9.6", "v124.8" ] ],
+    [ "bz1:1", "bb1:7b.i", "", [ "$bb" ] ],
+    [ "bz1:2", "bb1:8b.i", "", [ "$bb" ] ],
+    [ "lcd1:RS", "bb1:10t.a", "green", [ "v0" ] ],
+    [ "esp:27", "bb1:10t.b", "green", [ "h-9.45", "v-144", "h115.2", "v0", "h19.2", "v86.4" ] ],
+    [ "lcd1:E", "bb1:11t.a", "green", [ "v67.2", "h-9.6" ] ],
+    [
+      "bb1:11t.b",
+      "esp:26",
+      "green",
+      [ "v0", "h-134.4", "v-57.6", "h-134.4", "v0", "h0", "v115.2" ]
+    ],
+    [ "lcd1:D4", "bb1:17t.a", "green", [ "v0" ] ],
+    [ "bb1:17t.b", "esp:25", "green", [ "v0", "h-192", "v-67.2", "h-134.4", "v115.2" ] ],
+    [ "lcd1:D5", "bb1:18t.a", "green", [ "v0" ] ],
+    [ "bb1:18t.b", "esp:33", "green", [ "v9.6", "h-201.6", "v-86.4", "h-134.4", "v115.2" ] ],
+    [ "lcd1:D6", "bb1:19t.a", "green", [ "v0" ] ],
+    [ "bb1:19t.b", "esp:32", "green", [ "v9.6", "h-211.2", "v-96", "h-124.8", "v115.2" ] ],
+    [ "lcd1:D7", "bb1:20t.a", "green", [ "v0" ] ],
+    [ "bb1:20t.b", "esp:4", "green", [ "v9.6", "h-220.8", "v76.8" ] ],
+    [ "lcd1:VSS", "bb1:tn.5", "black", [ "v0" ] ],
+    [ "lcd1:VDD", "bb1:tp.6", "red", [ "v0" ] ],
+    [ "bb1:tp.1", "esp:5V", "red", [ "v0.3", "h-56", "v201.6", "h-115.2", "v-9.6" ] ],
+    [ "bb1:tn.1", "esp:GND.2", "black", [ "v0" ] ],
+    [ "lcd1:RW", "bb1:tn.9", "black", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}

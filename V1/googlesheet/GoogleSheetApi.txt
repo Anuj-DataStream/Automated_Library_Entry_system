@@ -1,0 +1,21 @@
+App script api:
+
+https://script.google.com/macros/s/AKfycbxqRelT7x1grkYgpwSV6tkO_wkGTOYMUGzjf4a1foYkrhrQC5Y-i_LNVfKvCJRs-mBk4g/exec
+
+Deploment id:
+
+AKfycbxqRelT7x1grkYgpwSV6tkO_wkGTOYMUGzjf4a1foYkrhrQC5Y-i_LNVfKvCJRs-mBk4g
+
+data:
+
+?uid=TEST001&roll=2026AR001&name=Anuj%20Kumar&branch=AR
+
+
+library:
+https://script.google.com/macros/library/d/1ey-jGqSxbGaP-UfkgCztP1S7r6pYV1dIuiR3LDoernI7qwxg4ewSg7ba/3
+
+
+example:
+
+https://script.google.com/macros/s/AKfycbxqRelT7x1grkYgpwSV6tkO_wkGTOYMUGzjf4a1foYkrhrQC5Y-i_LNVfKvCJRs-mBk4g/exec?uid=TEST001&roll=2026AR001&name=Anuj%20Kumar&branch=AR
+

@@ -1,0 +1,147 @@
+const SHEET_NAME = "Sheet1";
+
+function doGet(e) {
+  return processRFID(e);
+}
+
+function doPost(e) {
+  return processRFID(e);
+}
+
+function processRFID(e) {
+
+  try {
+
+    // Open Google Sheet
+    const sheet = SpreadsheetApp
+      .getActiveSpreadsheet()
+      .getSheetByName(SHEET_NAME);
+
+    if (!sheet) {
+      return sendResponse("ERROR", "Sheet not found");
+    }
+
+    // Get data from ESP32 / browser
+    const uid = String(e.parameter.uid || "").trim();
+    const roll = String(e.parameter.roll || "").trim();
+    const name = String(e.parameter.name || "").trim();
+    const branch = String(e.parameter.branch || "").trim();
+
+    // Check required information
+    if (!uid || !roll || !name || !branch) {
+      return sendResponse(
+        "ERROR",
+        "Missing student information"
+      );
+    }
+
+    // Current Indian date and time
+    const now = new Date();
+
+    const date = Utilities.formatDate(
+      now,
+      "Asia/Kolkata",
+      "dd/MM/yyyy"
+    );
+
+    const time = Utilities.formatDate(
+      now,
+      "Asia/Kolkata",
+      "HH:mm:ss"
+    );
+
+    // Number of rows containing data
+    const lastRow = sheet.getLastRow();
+
+    // --------------------------------
+    // SEARCH FOR AN OPEN VISIT
+    // --------------------------------
+
+    if (lastRow >= 2) {
+
+      const data = sheet
+        .getRange(2, 1, lastRow - 1, 7)
+        .getValues();
+
+      // Start from newest record
+      for (let i = data.length - 1; i >= 0; i--) {
+
+        const row = data[i];
+
+        const existingUID = String(row[1]).trim();
+        const exitTime = row[6];
+
+        // Same RFID card?
+        if (existingUID === uid) {
+
+          // Is Exit Time empty?
+          if (
+            exitTime === "" ||
+            exitTime === null ||
+            typeof exitTime === "undefined"
+          ) {
+
+            // Write EXIT time
+            sheet
+              .getRange(i + 2, 7)
+              .setValue(time);
+
+            return sendResponse(
+              "EXIT",
+              "Exit time recorded: " + time
+            );
+          }
+
+          // This visit is already closed.
+          // Continue searching older records.
+        }
+      }
+    }
+
+    // --------------------------------
+    // NO OPEN VISIT → CREATE ENTRY
+    // --------------------------------
+
+    sheet.appendRow([
+      date,
+      uid,
+      roll,
+      name,
+      branch,
+      time,
+      ""
+    ]);
+
+    return sendResponse(
+      "ENTRY",
+      "Entry time recorded: " + time
+    );
+
+  } catch (error) {
+
+    return sendResponse(
+      "ERROR",
+      error.toString()
+    );
+
+  }
+}
+
+
+// --------------------------------
+// SEND JSON RESPONSE
+// --------------------------------
+
+function sendResponse(status, message) {
+
+  return ContentService
+    .createTextOutput(
+      JSON.stringify({
+        status: status,
+        message: message
+      })
+    )
+    .setMimeType(
+      ContentService.MimeType.JSON
+    );
+}
